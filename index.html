@@ -1,170 +1,904 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MetaCore Life – Master Health, Wealth & Relationships</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaCore Life - Master Your Health, Wealth & Relationships</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #101820);
-      color: #fff;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            color: #1E293B;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-    header {
-      text-align: center;
-      padding: 5rem 2rem 3rem;
-    }
+        /* Floating Elements Animation */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
 
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #00ffc6, #0080ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 1px;
-    }
+        .float-item {
+            position: absolute;
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
 
-    p.tagline {
-      font-size: 1.25rem;
-      color: #ddd;
-      margin-top: 1rem;
-    }
+        /* Health Elements - Leaves */
+        .leaf {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10B981, #34D399);
+            border-radius: 0 100% 0 100%;
+            transform: rotate(45deg);
+        }
 
-    .cta {
-      text-align: center;
-      margin: 4rem 0;
-    }
+        /* Wealth Elements - Coins */
+        .coin {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+            border-radius: 50%;
+            position: relative;
+        }
 
-    .cta a {
-      background: linear-gradient(90deg, #00ffc6, #0080ff);
-      color: #000;
-      text-decoration: none;
-      padding: 1rem 2.5rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-    }
+        .coin::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
 
-    .cta a:hover {
-      opacity: 0.9;
-      transform: scale(1.05);
-    }
+        /* Relationship Elements - Hearts & Connections */
+        .heart {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #EC4899, #F472B6);
+            position: relative;
+            transform: rotate(-45deg);
+        }
 
-    section {
-      text-align: center;
-      padding: 3rem 1.5rem;
-      max-width: 900px;
-      margin: auto;
-    }
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #EC4899, #F472B6);
+            border-radius: 50%;
+        }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #00ffc6;
-    }
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
 
-    p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: #bbb;
-      margin-bottom: 1.5rem;
-    }
+        .heart::after {
+            left: 15px;
+            top: 0;
+        }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: #888;
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
+        .connection-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #A78BFA, transparent);
+            border-radius: 2px;
+        }
 
-    .highlight {
-      color: #00ffc6;
-      font-weight: 600;
-    }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30px) translateX(20px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(-60px) translateX(-20px) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-30px) translateX(20px) rotate(270deg);
+            }
+        }
 
-    @keyframes fadeInUp {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
 
-    [data-animate] {
-      opacity: 0;
-      animation: fadeInUp 1s forwards;
-    }
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    [data-animate="1"] {animation-delay: 0.3s;}
-    [data-animate="2"] {animation-delay: 0.6s;}
-    [data-animate="3"] {animation-delay: 0.9s;}
-  </style>
+        /* Logo - Simple Clean Geometric Design (Like Fortune 500 Companies) */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-mark {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Three Simple Circles Forming Triangle Pattern */
+        .logo-shape {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--shape-color-1), var(--shape-color-2));
+        }
+
+        .shape-health {
+            --shape-color-1: #10B981;
+            --shape-color-2: #34D399;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .shape-wealth {
+            --shape-color-1: #F59E0B;
+            --shape-color-2: #FBBF24;
+            bottom: 0;
+            left: 0;
+        }
+
+        .shape-relationships {
+            --shape-color-1: #8B5CF6;
+            --shape-color-2: #A78BFA;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Center Connection Lines */
+        .logo-core {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-core::before,
+        .logo-core::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 22px;
+            background: linear-gradient(180deg, #10B981, #F59E0B);
+            opacity: 0.3;
+        }
+
+        .logo-core::before {
+            transform: rotate(60deg);
+        }
+
+        .logo-core::after {
+            transform: rotate(-60deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1E293B;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            background: linear-gradient(135deg, #10B981, #F59E0B, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 10;
+            padding-top: 100px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #8B5CF6;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge::before {
+            content: '✨';
+            font-size: 1.2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            color: #0F172A;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #10B981, #F59E0B, #EC4899, #8B5CF6);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            margin-bottom: 3rem;
+            color: #64748B;
+            max-width: 700px;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            color: white;
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(139, 92, 246, 0.4);
+        }
+
+        .cta-secondary {
+            background: white;
+            color: #8B5CF6;
+            border: 2px solid #E9D5FF;
+        }
+
+        .cta-secondary:hover {
+            background: #F9FAFB;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pillars Section */
+        .pillars-section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, #F0F9FF, #E0F2FE);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0EA5E9;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            color: #0F172A;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: #64748B;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .pillar-card {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--pillar-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .pillar-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.1);
+        }
+
+        .pillar-card.health { --pillar-gradient: linear-gradient(135deg, #10B981, #34D399); }
+        .pillar-card.wealth { --pillar-gradient: linear-gradient(135deg, #F59E0B, #FBBF24); }
+        .pillar-card.relationships { --pillar-gradient: linear-gradient(135deg, #EC4899, #F472B6); }
+
+        .pillar-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: var(--pillar-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pillar-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #0F172A;
+        }
+
+        .pillar-description {
+            color: #64748B;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Vision Section */
+        .vision-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #DBEAFE 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .vision-statement {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.5;
+            color: #0F172A;
+            margin-bottom: 2rem;
+        }
+
+        .vision-highlight {
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+
+        /* Email Capture Section */
+        .email-section {
+            padding: 8rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .email-form-container {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.08);
+            margin-top: 3rem;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 1rem;
+        }
+
+        .form-description {
+            font-size: 1.1rem;
+            color: #64748B;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 1.2rem 1.8rem;
+            font-size: 1rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 50px;
+            background: #F8FAFC;
+            color: #1E293B;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        }
+
+        .email-input::placeholder {
+            color: #94A3B8;
+        }
+
+        .submit-button {
+            padding: 1.2rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .privacy-note {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            background: linear-gradient(180deg, transparent, #F8FAFC);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            margin-bottom: 2rem;
+        }
+
+        .footer-text {
+            color: #64748B;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-copyright {
+            color: #94A3B8;
+            font-size: 0.85rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+            border-radius: 20px;
+            color: #065F46;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            animation: slideDown 0.5s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .email-form {
+                flex-direction: column;
+            }
+
+            .submit-button {
+                width: 100%;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <h1 data-animate="1">MetaCore Life</h1>
-    <p class="tagline" data-animate="2">Master Your <span class="highlight">Health</span>, <span class="highlight">Wealth</span> & <span class="highlight">Relationships</span>.</p>
-  </header>
-
-  <div class="cta" data-animate="3">
-    <a href="#">Join the Movement</a>
-  </div>
-
-  <section>
-    <h2>What is MetaCore?</h2>
-    <p>
-      MetaCore Life is more than a brand — it’s a system for <span class="highlight">elevating every part of your life</span>. 
-      We combine timeless wisdom and modern psychology to help you build physical vitality, financial freedom, and meaningful connection.
-    </p>
-    <p>
-      Whether you’re building your body, your business, or your bond with others, MetaCore helps you <span class="highlight">align health, wealth, and relationships</span> into one powerful, balanced system.
-    </p>
-  </section>
-
-  <section>
-    <h2>Our Vision</h2>
-    <p>
-      To help 1 million people live a <span class="highlight">MetaCore Life</span> — a life that’s strong in body, abundant in wealth, and rich in relationships.
-    </p>
-  </section>
-
-  <section>
-    <h2>Coming Soon</h2>
-    <p>
-      We’re building the next generation of tools, products, and experiences to help you master your life’s core.  
-      Stay tuned for our launch — and be part of something extraordinary.
-    </p>
-    <div class="cta">
-      <a href="#">Get Early Access</a>
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+        <!-- Health Elements -->
+        <div class="float-item leaf" style="top: 10%; left: 10%; animation-delay: 0s; animation-duration: 25s;"></div>
+        <div class="float-item leaf" style="top: 70%; left: 15%; animation-delay: 5s; animation-duration: 30s;"></div>
+        <div class="float-item leaf" style="top: 40%; right: 20%; animation-delay: 10s; animation-duration: 28s;"></div>
+        
+        <!-- Wealth Elements -->
+        <div class="float-item coin" style="top: 20%; right: 15%; animation-delay: 3s; animation-duration: 22s;"></div>
+        <div class="float-item coin" style="bottom: 30%; left: 20%; animation-delay: 8s; animation-duration: 26s;"></div>
+        <div class="float-item coin" style="top: 60%; right: 10%; animation-delay: 12s; animation-duration: 24s;"></div>
+        
+        <!-- Relationship Elements -->
+        <div class="float-item heart" style="top: 30%; left: 25%; animation-delay: 2s; animation-duration: 27s;"></div>
+        <div class="float-item heart" style="bottom: 20%; right: 25%; animation-delay: 7s; animation-duration: 29s;"></div>
+        <div class="float-item connection-line" style="top: 50%; left: 5%; animation-delay: 4s; animation-duration: 20s;"></div>
+        <div class="float-item connection-line" style="bottom: 40%; right: 5%; animation-delay: 9s; animation-duration: 23s;"></div>
     </div>
-  </section>
 
-  <footer>
-    © <script>document.write(new Date().getFullYear());</script> MetaCore Life. All Rights Reserved.
-  </footer>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-mark">
+                    <div class="logo-shape shape-health"></div>
+                    <div class="logo-shape shape-wealth"></div>
+                    <div class="logo-shape shape-relationships"></div>
+                    <div class="logo-core"></div>
+                </div>
+                <div class="logo-text">MetaCore<span>Life</span></div>
+            </div>
+        </div>
+    </header>
 
-  <script>
-    // Simple animation on scroll
-    const elements = document.querySelectorAll('[data-animate]');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
+    <main>
+        <section class="hero">
+            <div class="hero-badge">Launching 2025</div>
+            <h1>
+                Master Your <span class="gradient-text">Health, Wealth<br>& Relationships</span>
+            </h1>
+            <p class="hero-subtitle">
+                A visionary system combining timeless wisdom and modern psychology to help you build physical vitality, financial freedom, and meaningful connection.
+            </p>
+            <div class="cta-container">
+                <button class="cta-button cta-primary" onclick="scrollToEmail()">Get Early Access</button>
+                <button class="cta-button cta-secondary" onclick="scrollToPillars()">Learn More</button>
+            </div>
+        </section>
+
+        <section class="pillars-section" id="pillars">
+            <div class="section-header fade-in">
+                <div class="section-label">The Three Pillars</div>
+                <h2 class="section-title">What is MetaCore?</h2>
+                <p class="section-description">
+                    MetaCore Life is more than a brand — it's a comprehensive system for elevating every dimension of your existence. We integrate ancient wisdom with cutting-edge psychology to create lasting transformation.
+                </p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card health fade-in">
+                    <div class="pillar-icon">🌱</div>
+                    <h3 class="pillar-title">Health</h3>
+                    <p class="pillar-description">
+                        Build unshakeable physical vitality through science-backed fitness protocols, optimized nutrition, and regenerative recovery practices that enhance your energy and longevity.
+                    </p>
+                </div>
+
+                <div class="pillar-card wealth fade-in">
+                    <div class="pillar-icon">💎</div>
+                    <h3 class="pillar-title">Wealth</h3>
+                    <p class="pillar-description">
+                        Achieve true financial freedom with proven strategies for exponential income growth, intelligent investment, and building sustainable abundance that lasts generations.
+                    </p>
+                </div>
+
+                <div class="pillar-card relationships fade-in">
+                    <div class="pillar-icon">🤝</div>
+                    <h3 class="pillar-title">Relationships</h3>
+                    <p class="pillar-description">
+                        Cultivate deep, meaningful connections through authentic communication, emotional mastery, and relationship intelligence that enriches every aspect of your life.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="vision-section">
+            <div class="vision-content fade-in">
+                <div class="section-label">Our Vision</div>
+                <h2 class="section-title">A Movement for Transformation</h2>
+                <p class="vision-statement">
+                    To empower <span class="vision-highlight">1 million people</span> to live a MetaCore Life — a life that's strong in body, abundant in wealth, and rich in relationships.
+                </p>
+            </div>
+        </section>
+
+        <section class="email-section" id="email">
+            <div class="section-header fade-in">
+                <div class="section-label">Coming Soon</div>
+                <h2 class="section-title">Be Part of Something Extraordinary</h2>
+                <p class="section-description">
+                    We're building the next generation of tools, products, and experiences to help you master your life's core. Join our exclusive community and get early access.
+                </p>
+            </div>
+
+            <div class="email-form-container fade-in">
+                <h3 class="form-title">Join the Waitlist</h3>
+                <p class="form-description">
+                    Be the first to know when we launch. Get exclusive insights, early-bird pricing, and access to our founding members community.
+                </p>
+                <form class="email-form" onsubmit="handleSubmit(event)">
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        placeholder="Enter your email address" 
+                        required
+                        id="emailInput"
+                    >
+                    <button type="submit" class="submit-button">Get Early Access</button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    ✓ Success! Check your email to confirm your subscription.
+                </div>
+                <p class="privacy-note">
+                    🔒 We respect your privacy. Unsubscribe anytime.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo-container" style="justify-content: center;">
+                    <div class="logo-mark">
+                        <div class="logo-shape shape-health"></div>
+                        <div class="logo-shape shape-wealth"></div>
+                        <div class="logo-shape shape-relationships"></div>
+                        <div class="logo-core"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="footer-text">
+                Building a future where health, wealth, and relationships thrive in harmony.
+            </p>
+            <p class="footer-copyright">
+                © 2025 MetaCore Life. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth Scroll Functions
+        function scrollToEmail() {
+            document.getElementById('email').scrollIntoView({ behavior: 'smooth' });
         }
-      });
-    });
-    elements.forEach(el => observer.observe(el));
-  </script>
 
+        function scrollToPillars() {
+            document.getElementById('pillars').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form Submission Handler
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('emailInput');
+            const email = emailInput.value;
+            const successMessage = document.getElementById('successMessage');
+
+            // Store email in localStorage (for demonstration)
+            // In production, you'd integrate with Google Sheets API or a backend service
+            const existingEmails = JSON.parse(localStorage.getItem('metacore_emails') || '[]');
+            
+            if (!existingEmails.includes(email)) {
+                existingEmails.push({
+                    email: email,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('metacore_emails', JSON.stringify(existingEmails));
+            }
+
+            // Show success message
+            successMessage.classList.add('show');
+            emailInput.value = '';
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+
+            // Log for demonstration (remove in production)
+            console.log('Email captured:', email);
+            console.log('All emails:', existingEmails);
+        }
+
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
 </body>
 </html>
