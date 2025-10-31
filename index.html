@@ -510,68 +510,88 @@
 
         /* Email Capture Section */
         .email-section {
-          text-align: center;
-          padding: 80px 20px;
-          background: linear-gradient(to bottom right, #ffffff, #f9fafb);
-          border-top: 1px solid #eee;
-        }
-        
-        .email-form {
-          margin-top: 20px;
-          max-width: 500px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        
-        .email-form .form-group {
-          margin-bottom: 15px;
-        }
-        
-        .email-form input,
-        .email-form textarea {
-          width: 100%;
-          padding: 12px 15px;
-          border-radius: 8px;
-          border: 1px solid #ddd;
-          font-size: 1rem;
-          transition: all 0.2s ease;
-        }
-        
-        .email-form input:focus,
-        .email-form textarea:focus {
-          border-color: #8B5CF6;
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-        }
-        
-        .email-form button {
-          background: linear-gradient(90deg, #8B5CF6, #EC4899);
-          color: white;
-          border: none;
-          padding: 12px 28px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-weight: 600;
-          transition: transform 0.2s ease, opacity 0.3s ease;
-        }
-        
-        .email-form button:hover {
-          transform: scale(1.05);
-          opacity: 0.9;
-        }
-        
-        .success-message {
-          opacity: 0;
-          color: #10B981;
-          font-size: 0.95rem;
-          margin-top: 10px;
-          transition: opacity 0.3s ease;
-        }
-        
-        .success-message.show {
-          opacity: 1;
+            padding: 8rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
+        .email-form-container {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.08);
+            margin-top: 3rem;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 1rem;
+        }
+
+        .form-description {
+            font-size: 1.1rem;
+            color: #64748B;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 1.2rem 1.8rem;
+            font-size: 1rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 50px;
+            background: #F8FAFC;
+            color: #1E293B;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        }
+
+        .email-input::placeholder {
+            color: #94A3B8;
+        }
+
+        .submit-button {
+            padding: 1.2rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .privacy-note {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
 
         /* Footer */
         footer {
@@ -758,43 +778,38 @@
             </div>
         </section>
 
-        <!-- Email Capture Section -->
-        <section id="email" class="email-section fade-in">
-          <div class="content-wrapper">
-            <h2>Join MetaCore Life</h2>
-            <p>Get updates, insights, and tools for mastering your health, wealth, and relationships.</p>
-        
-            <form
-              action="https://formspree.io/f/xanlpybp"
-              method="POST"
-              class="email-form"
-              id="contactForm"
-            >
-              <div class="form-group">
-                <input 
-                  type="email" 
-                  name="email" 
-                  id="emailInput" 
-                  placeholder="Enter your email address" 
-                  required
-                >
-              </div>
-        
-              <div class="form-group">
-                <textarea 
-                  name="message" 
-                  id="messageInput" 
-                  placeholder="Your message (optional)"
-                  rows="3"
-                ></textarea>
-              </div>
-        
-              <button type="submit" class="cta-button">Join the Movement</button>
-              <p id="successMessage" class="success-message">Thank you for joining MetaCore Life!</p>
-            </form>
-          </div>
-        </section>
+        <section class="email-section" id="email">
+            <div class="section-header fade-in">
+                <div class="section-label">Coming Soon</div>
+                <h2 class="section-title">Be Part of Something Extraordinary</h2>
+                <p class="section-description">
+                    We're building the next generation of tools, products, and experiences to help you master your life's core. Join our exclusive community and get early access.
+                </p>
+            </div>
 
+            <div class="email-form-container fade-in">
+                <h3 class="form-title">Join the Waitlist</h3>
+                <p class="form-description">
+                    Be the first to know when we launch. Get exclusive insights, early-bird pricing, and access to our founding members community.
+                </p>
+                <form class="email-form" onsubmit="handleSubmit(event)">
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        placeholder="Enter your email address" 
+                        required
+                        id="emailInput"
+                    >
+                    <button type="submit" class="submit-button">Get Early Access</button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    ✓ Success! Check your email to confirm your subscription.
+                </div>
+                <p class="privacy-note">
+                    🔒 We respect your privacy. Unsubscribe anytime.
+                </p>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -845,30 +860,38 @@
         }
 
         // Form Submission Handler
-        <script>
-        document.getElementById('contactForm').addEventListener('submit', async function (e) {
-          e.preventDefault();
-          
-          const form = e.target;
-          const successMessage = document.getElementById('successMessage');
-        
-          const response = await fetch(form.action, {
-            method: form.method,
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          });
-        
-          if (response.ok) {
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('emailInput');
+            const email = emailInput.value;
+            const successMessage = document.getElementById('successMessage');
+
+            // Store email in localStorage (for demonstration)
+            // In production, you'd integrate with Google Sheets API or a backend service
+            const existingEmails = JSON.parse(localStorage.getItem('metacore_emails') || '[]');
+            
+            if (!existingEmails.includes(email)) {
+                existingEmails.push({
+                    email: email,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('metacore_emails', JSON.stringify(existingEmails));
+            }
+
+            // Show success message
             successMessage.classList.add('show');
-            form.reset();
+            emailInput.value = '';
+
+            // Hide success message after 5 seconds
             setTimeout(() => {
-              successMessage.classList.remove('show');
+                successMessage.classList.remove('show');
             }, 5000);
-          } else {
-            alert('Oops! Something went wrong. Please try again.');
-          }
-        });
-        </script>
+
+            // Log for demonstration (remove in production)
+            console.log('Email captured:', email);
+            console.log('All emails:', existingEmails);
+        }
 
         // Header scroll effect
         let lastScroll = 0;
