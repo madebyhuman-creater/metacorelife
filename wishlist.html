@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - MetaCore Life</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="marketplace.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-mark">
+                    <div class="logo-shape shape-health"></div>
+                    <div class="logo-shape shape-wealth"></div>
+                    <div class="logo-shape shape-relationships"></div>
+                    <div class="logo-core"></div>
+                </div>
+                <div class="logo-text">MetaCore<span>Life</span></div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="wishlist.html" class="active">Wishlist</a>
+                <a href="dashboard.html">Dashboard</a>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="icon-button" onclick="window.location.href='marketplace.html'">
+                    🔍
+                </button>
+                <button class="icon-button cart-button" onclick="window.location.href='marketplace.html#cart'">
+                    🛒
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="icon-button" onclick="toggleUserMenu()">
+                    👤
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="marketplace-main">
+        <section class="page-hero">
+            <div class="container">
+                <h1>My Wishlist</h1>
+                <p>Products you've saved for later</p>
+            </div>
+        </section>
+
+        <section class="wishlist-section">
+            <div class="container">
+                <div class="wishlist-header">
+                    <h2><span id="wishlistCount">0</span> Items</h2>
+                    <div class="wishlist-actions">
+                        <button class="btn-secondary" onclick="clearWishlist()">Clear All</button>
+                        <button class="btn-primary" onclick="addAllToCart()">Add All to Cart</button>
+                    </div>
+                </div>
+                
+                <div class="wishlist-grid" id="wishlistGrid">
+                    <!-- Wishlist items will be loaded here -->
+                </div>
+                
+                <div class="empty-state" id="emptyWishlist" style="display: none;">
+                    <div class="empty-icon">❤️</div>
+                    <h3>Your wishlist is empty</h3>
+                    <p>Save items you love to view them later</p>
+                    <a href="marketplace.html" class="btn-primary">Browse Products</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo-container" style="justify-content: center;">
+                    <div class="logo-mark">
+                        <div class="logo-shape shape-health"></div>
+                        <div class="logo-shape shape-wealth"></div>
+                        <div class="logo-shape shape-relationships"></div>
+                        <div class="logo-core"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="footer-text">
+                Building a future where health, wealth, and relationships thrive in harmony.
+            </p>
+            <p class="footer-copyright">
+                © 2025 MetaCore Life. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="marketplace.js"></script>
+    <script src="wishlist.js"></script>
+</body>
+</html>
