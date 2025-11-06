@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - MetaCore Life</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="marketplace.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-mark">
+                    <div class="logo-shape shape-health"></div>
+                    <div class="logo-shape shape-wealth"></div>
+                    <div class="logo-shape shape-relationships"></div>
+                    <div class="logo-core"></div>
+                </div>
+                <div class="logo-text">MetaCore<span>Life</span></div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="wishlist.html">Wishlist</a>
+                <a href="dashboard.html" class="active">Dashboard</a>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="icon-button cart-button" onclick="window.location.href='marketplace.html#cart'">
+                    🛒
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="icon-button" onclick="logout()">
+                    🚪
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="container">
+            <div class="dashboard-header">
+                <div class="user-welcome">
+                    <h1>Welcome back, <span id="userName">User</span>! 👋</h1>
+                    <p>Here's what's happening with your MetaCore journey</p>
+                </div>
+                <button class="btn-primary" onclick="window.location.href='marketplace.html'">
+                    Shop Now
+                </button>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Quick Stats -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">🛒</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="cartItemsCount">0</div>
+                            <div class="stat-label">Cart Items</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">❤️</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="wishlistItemsCount">0</div>
+                            <div class="stat-label">Wishlist Items</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="ordersCount">0</div>
+                            <div class="stat-label">Orders</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalSpent">$0</div>
+                            <div class="stat-label">Total Spent</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="dashboard-content">
+                    <!-- Recent Orders -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Recent Orders</h2>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="orders-list" id="recentOrders">
+                            <div class="empty-state">
+                                <p>No orders yet</p>
+                                <a href="marketplace.html" class="btn-secondary">Start Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Information -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Account Information</h2>
+                            <button class="btn-secondary" onclick="editProfile()">Edit</button>
+                        </div>
+                        <div class="account-info">
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value" id="userEmail">user@email.com</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Member Since:</span>
+                                <span class="info-value" id="memberSince">January 2025</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Account Type:</span>
+                                <span class="info-value">
+                                    <span class="badge">Free Member</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Cart -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Your Cart</h2>
+                            <a href="marketplace.html#cart" class="view-all">View Cart</a>
+                        </div>
+                        <div class="cart-preview" id="cartPreview">
+                            <!-- Cart items preview -->
+                        </div>
+                    </div>
+
+                    <!-- Wishlist Preview -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Your Wishlist</h2>
+                            <a href="wishlist.html" class="view-all">View All</a>
+                        </div>
+                        <div class="wishlist-preview" id="wishlistPreview">
+                            <!-- Wishlist items preview -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="dashboard-sidebar">
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card">
+                        <h3>Quick Actions</h3>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="window.location.href='marketplace.html'">
+                                <span>🛍️</span> Browse Products
+                            </button>
+                            <button class="action-btn" onclick="window.location.href='wishlist.html'">
+                                <span>❤️</span> View Wishlist
+                            </button>
+                            <button class="action-btn" onclick="window.location.href='#orders'">
+                                <span>📦</span> Track Orders
+                            </button>
+                            <button class="action-btn" onclick="window.location.href='index.html#email'">
+                                <span>💬</span> Contact Support
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="dashboard-card">
+                        <h3>Recommended for You</h3>
+                        <div class="recommendations" id="recommendations">
+                            <!-- Product recommendations -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">
+                Building a future where health, wealth, and relationships thrive in harmony.
+            </p>
+            <p class="footer-copyright">
+                © 2025 MetaCore Life. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="marketplace.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
