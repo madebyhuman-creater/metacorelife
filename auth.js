@@ -1,279 +1,160 @@
-// Authentication System
-const AUTH_STORAGE_KEY = 'metacore_user';
-const USERS_STORAGE_KEY = 'metacore_users';
+// Authentication with Supabase - Production Ready
 
 // Switch between login and register forms
 function showLogin() {
-    document.getElementById('loginForm').classList.add('active');
-    document.getElementById('registerForm').classList.remove('active');
+    document.getElementById('loginForm').classList.add('active')
+    document.getElementById('registerForm').classList.remove('active')
 }
 
 function showRegister() {
-    document.getElementById('registerForm').classList.add('active');
-    document.getElementById('loginForm').classList.remove('active');
+    document.getElementById('registerForm').classList.add('active')
+    document.getElementById('loginForm').classList.remove('active')
 }
 
-// Handle Login
-function handleLogin(event) {
-    event.preventDefault();
+// Handle Registration
+async function handleRegister(event) {
+    event.preventDefault()
     
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    
-    // Get all users
-    const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
-    
-    // Find user
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    if (user) {
-        // Create session
-        const session = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            loggedInAt: new Date().toISOString()
-        };
-        
-        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
-        
-        // Merge cart and wishlist
-        mergeUserData(user.id);
-        
-        showNotification('Welcome back, ' + user.name + '!', 'success');
-        
-        // Redirect to previous page or dashboard
-        const redirectUrl = localStorage.getItem('redirect_after_login') || 'dashboard.html';
-        localStorage.removeItem('redirect_after_login');
-        
-        setTimeout(() => {
-            window.location.href = redirectUrl;
-        }, 1000);
-    } else {
-        showNotification('Invalid email or password', 'error');
-    }
-}
-
-// Handle Register
-function handleRegister(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('registerName').value;
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
-    const confirmPassword = document.getElementById('registerPasswordConfirm').value;
+    const name = document.getElementById('registerName').value
+    const email = document.getElementById('registerEmail').value
+    const password = document.getElementById('registerPassword').value
+    const confirmPassword = document.getElementById('registerPasswordConfirm').value
     
     // Validation
     if (password !== confirmPassword) {
-        showNotification('Passwords do not match', 'error');
-        return;
+        showNotification('Passwords do not match', 'error')
+        return
     }
     
     if (password.length < 8) {
-        showNotification('Password must be at least 8 characters', 'error');
-        return;
+        showNotification('Password must be at least 8 characters', 'error')
+        return
     }
     
-    // Check if user exists
-    const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
-    
-    if (users.find(u => u.email === email)) {
-        showNotification('Email already registered', 'error');
-        return;
-    }
-    
-    // Create new user
-    const newUser = {
-        id: generateUserId(),
-        name: name,
-        email: email,
-        password: password, // In production, this should be hashed
-        createdAt: new Date().toISOString(),
-        cart: [],
-        wishlist: [],
-        orders: []
-    };
-    
-    users.push(newUser);
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-    
-    // Auto login
-    const session = {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        loggedInAt: new Date().toISOString()
-    };
-    
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
-    
-    showNotification('Account created successfully!', 'success');
-    
-    setTimeout(() => {
-        window.location.href = 'dashboard.html';
-    }, 1000);
-}
-
-// Social Login (Demo)
-function socialLogin(provider) {
-    showNotification(`${provider} login coming soon!`, 'info');
-    
-    // Demo: Auto-create account
-    const demoUser = {
-        id: generateUserId(),
-        name: 'Demo User',
-        email: `demo@${provider}.com`,
-        password: '',
-        createdAt: new Date().toISOString(),
-        cart: [],
-        wishlist: [],
-        orders: []
-    };
-    
-    const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
-    users.push(demoUser);
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-    
-    const session = {
-        id: demoUser.id,
-        name: demoUser.name,
-        email: demoUser.email,
-        loggedInAt: new Date().toISOString()
-    };
-    
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
-    
-    setTimeout(() => {
-        window.location.href = 'dashboard.html';
-    }, 1000);
-}
-
-// Generate User ID
-function generateUserId() {
-    return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-}
-
-// Merge guest cart/wishlist with user account
-function mergeUserData(userId) {
-    const guestCart = JSON.parse(localStorage.getItem('metacore_cart') || '[]');
-    const guestWishlist = JSON.parse(localStorage.getItem('metacore_wishlist') || '[]');
-    
-    const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
-    const userIndex = users.findIndex(u => u.id === userId);
-    
-    if (userIndex !== -1) {
-        // Merge cart
-        if (guestCart.length > 0) {
-            const existingCart = users[userIndex].cart || [];
-            
-            guestCart.forEach(guestItem => {
-                const existingItem = existingCart.find(item => item.id === guestItem.id);
-                if (existingItem) {
-                    existingItem.quantity += guestItem.quantity;
-                } else {
-                    existingCart.push(guestItem);
+    try {
+        // Register with Supabase
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    full_name: name
                 }
-            });
-            
-            users[userIndex].cart = existingCart;
+            }
+        })
+        
+        if (error) throw error
+        
+        // Create user profile
+        if (data.user) {
+            await supabase.from('user_profiles').insert({
+                id: data.user.id,
+                full_name: name
+            })
         }
         
-        // Merge wishlist
-        if (guestWishlist.length > 0) {
-            const existingWishlist = users[userIndex].wishlist || [];
-            guestWishlist.forEach(itemId => {
-                if (!existingWishlist.includes(itemId)) {
-                    existingWishlist.push(itemId);
-                }
-            });
-            users[userIndex].wishlist = existingWishlist;
-        }
+        showNotification('Account created! Check your email to verify.', 'success')
         
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+        // Redirect after 2 seconds
+        setTimeout(() => {
+            window.location.href = 'auth.html'
+        }, 2000)
         
-        // Update local storage
-        localStorage.setItem('metacore_cart', JSON.stringify(users[userIndex].cart));
-        localStorage.setItem('metacore_wishlist', JSON.stringify(users[userIndex].wishlist));
+    } catch (error) {
+        console.error('Registration error:', error)
+        showNotification(error.message, 'error')
     }
 }
 
-// Check if user is logged in
-function isLoggedIn() {
-    return localStorage.getItem(AUTH_STORAGE_KEY) !== null;
+// Handle Login
+async function handleLogin(event) {
+    event.preventDefault()
+    
+    const email = document.getElementById('loginEmail').value
+    const password = document.getElementById('loginPassword').value
+    
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        })
+        
+        if (error) throw error
+        
+        showNotification('Welcome back!', 'success')
+        
+        // Redirect to previous page or dashboard
+        const redirectUrl = localStorage.getItem('redirect_after_login') || 'dashboard.html'
+        localStorage.removeItem('redirect_after_login')
+        
+        setTimeout(() => {
+            window.location.href = redirectUrl
+        }, 1000)
+        
+    } catch (error) {
+        console.error('Login error:', error)
+        showNotification('Invalid email or password', 'error')
+    }
 }
 
-// Get current user
-function getCurrentUser() {
-    const session = localStorage.getItem(AUTH_STORAGE_KEY);
-    return session ? JSON.parse(session) : null;
+// Social Login (Google)
+async function socialLogin(provider) {
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: provider, // 'google' or 'facebook'
+            options: {
+                redirectTo: window.location.origin + '/dashboard.html'
+            }
+        })
+        
+        if (error) throw error
+        
+    } catch (error) {
+        console.error('Social login error:', error)
+        showNotification('Social login coming soon!', 'info')
+    }
 }
 
 // Logout
-function logout() {
-    // Save cart and wishlist to user account
-    const user = getCurrentUser();
-    if (user) {
-        const cart = JSON.parse(localStorage.getItem('metacore_cart') || '[]');
-        const wishlist = JSON.parse(localStorage.getItem('metacore_wishlist') || '[]');
+async function logout() {
+    try {
+        await supabase.auth.signOut()
+        showNotification('Logged out successfully', 'success')
         
-        const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
-        const userIndex = users.findIndex(u => u.id === user.id);
+        setTimeout(() => {
+            window.location.href = 'index.html'
+        }, 1000)
         
-        if (userIndex !== -1) {
-            users[userIndex].cart = cart;
-            users[userIndex].wishlist = wishlist;
-            localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-        }
-    }
-    
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-    showNotification('Logged out successfully', 'success');
-    
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 1000);
-}
-
-// Require login for certain pages
-function requireLogin() {
-    if (!isLoggedIn()) {
-        localStorage.setItem('redirect_after_login', window.location.pathname + window.location.search);
-        window.location.href = 'auth.html';
+    } catch (error) {
+        console.error('Logout error:', error)
+        showNotification('Error logging out', 'error')
     }
 }
 
-// Load user data when logged in
-function loadUserData() {
-    const user = getCurrentUser();
-    if (user) {
-        const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
-        const userData = users.find(u => u.id === user.id);
-        
-        if (userData) {
-            // Load cart
-            if (userData.cart && userData.cart.length > 0) {
-                localStorage.setItem('metacore_cart', JSON.stringify(userData.cart));
-            }
-            
-            // Load wishlist
-            if (userData.wishlist && userData.wishlist.length > 0) {
-                localStorage.setItem('metacore_wishlist', JSON.stringify(userData.wishlist));
-            }
-        }
+// Check Auth State on Page Load
+supabase.auth.onAuthStateChange((event, session) => {
+    console.log('Auth event:', event, session)
+    
+    if (event === 'SIGNED_IN') {
+        console.log('User signed in:', session.user)
     }
-}
+    
+    if (event === 'SIGNED_OUT') {
+        console.log('User signed out')
+    }
+})
 
 // Notification System
 function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
+    const notification = document.createElement('div')
+    notification.className = `notification notification-${type}`
+    notification.textContent = message
     
     const colors = {
         success: 'linear-gradient(135deg, #10B981, #34D399)',
         error: 'linear-gradient(135deg, #EF4444, #F87171)',
         info: 'linear-gradient(135deg, #3B82F6, #60A5FA)'
-    };
+    }
     
     notification.style.cssText = `
         position: fixed;
@@ -287,20 +168,20 @@ function showNotification(message, type = 'info') {
         z-index: 10000;
         animation: slideIn 0.3s ease;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    `;
+    `
     
-    document.body.appendChild(notification);
+    document.body.appendChild(notification)
     
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+        notification.style.animation = 'slideOut 0.3s ease'
+        setTimeout(() => notification.remove(), 300)
+    }, 3000)
 }
 
 // Add animation styles
 if (!document.getElementById('auth-animations')) {
-    const style = document.createElement('style');
-    style.id = 'auth-animations';
+    const style = document.createElement('style')
+    style.id = 'auth-animations'
     style.textContent = `
         @keyframes slideIn {
             from { transform: translateX(400px); opacity: 0; }
@@ -310,9 +191,6 @@ if (!document.getElementById('auth-animations')) {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(400px); opacity: 0; }
         }
-    `;
-    document.head.appendChild(style);
+    `
+    document.head.appendChild(style)
 }
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', loadUserData);
