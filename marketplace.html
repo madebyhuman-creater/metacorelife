@@ -14,6 +14,7 @@
 </head>
 <body>
     <!-- Header -->
+    <!-- REPLACE your entire <header> section in marketplace.html with this -->
     <header>
         <div class="header-content">
             <div class="logo-container">
@@ -29,21 +30,50 @@
             <nav class="main-nav">
                 <a href="index.html">Home</a>
                 <a href="marketplace.html" class="active">Marketplace</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
             </nav>
             
             <div class="header-actions">
                 <button class="icon-button" onclick="toggleSearch()">
                     🔍
                 </button>
+                
+                <!-- NEW: Wishlist Button -->
+                <button class="icon-button wishlist-button" onclick="window.location.href='wishlist.html'">
+                    ❤️
+                    <span class="cart-badge" id="wishlistBadge">0</span>
+                </button>
+                
                 <button class="icon-button cart-button" onclick="toggleCart()">
                     🛒
                     <span class="cart-badge" id="cartBadge">0</span>
                 </button>
-                <button class="icon-button">
-                    👤
-                </button>
+                
+                <!-- UPDATED: Profile with Dropdown -->
+                <div class="profile-dropdown">
+                    <button class="icon-button" onclick="toggleProfileMenu()">
+                        👤
+                    </button>
+                    <div class="dropdown-menu" id="profileMenu">
+                        <a href="dashboard.html" class="dropdown-item">
+                            <span>📊</span> Dashboard
+                        </a>
+                        <a href="wishlist.html" class="dropdown-item">
+                            <span>❤️</span> My Wishlist
+                        </a>
+                        <a href="orders.html" class="dropdown-item">
+                            <span>📦</span> Orders
+                        </a>
+                        <a href="account.html" class="dropdown-item">
+                            <span>⚙️</span> Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="logout()">
+                            <span>🚪</span> Logout
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
