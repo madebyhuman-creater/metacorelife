@@ -4,11 +4,12 @@ let products = []
 
 // Initialize
 document.addEventListener('DOMContentLoaded', async function() {
-    await requireLogin()
-    await loadProducts()
-    await updateCartBadge()
-    await loadWishlist()
-})
+    await requireLogin();
+    await loadProducts();
+    await updateCartBadge();
+    await updateWishlistBadge(); // ADD THIS LINE
+    await loadWishlist();
+});
 
 // Load all products
 async function loadProducts() {
@@ -215,4 +216,47 @@ function showNotification(message, type = 'success') {
         notification.style.animation = 'slideOut 0.3s ease'
         setTimeout(() => notification.remove(), 300)
     }, 3000)
+}
+
+// Toggle User Menu Dropdown
+function toggleUserMenu(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById('userMenu');
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('userMenu');
+    const dropdown = event.target.closest('.dropdown');
+    
+    if (!dropdown && menu) {
+        menu.style.display = 'none';
+    }
+});
+
+// Update Wishlist Badge
+async function updateWishlistBadge() {
+    const user = await getCurrentUser();
+    if (!user) {
+        document.getElementById('wishlistBadge').textContent = '0';
+        return;
+    }
+    
+    try {
+        const { data } = await supabase
+            .from('wishlist_items')
+            .select('id')
+            .eq('user_id', user.id);
+        
+        document.getElementById('wishlistBadge').textContent = data ? data.length : '0';
+    } catch (error) {
+        console.error('Error updating wishlist badge:', error);
+    }
+}
+
+// Logout
+async function logout() {
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
 }
