@@ -6,9 +6,10 @@ let currentImageIndex = 0
 
 // Initialize
 document.addEventListener('DOMContentLoaded', async function() {
-    await loadProducts()
-    await updateCartBadge()
-})
+    await loadProducts();
+    await updateCartBadge();
+    await updateWishlistBadge(); // ADD THIS LINE
+});
 
 // Load Products from Supabase
 async function loadProducts(category = 'all') {
@@ -346,16 +347,16 @@ function toggleSearch() {
 
 // Wishlist Functions
 async function toggleWishlist(button, productId) {
-    const user = await getCurrentUser()
+    const user = await getCurrentUser();
     
     if (!user) {
-        showNotification('Please login to save items', 'info')
-        localStorage.setItem('redirect_after_login', window.location.href)
-        setTimeout(() => window.location.href = 'auth.html', 1000)
-        return
+        showNotification('Please login to save items', 'info');
+        localStorage.setItem('redirect_after_login', window.location.href);
+        setTimeout(() => window.location.href = 'auth.html', 1000);
+        return;
     }
     
-    const isLiked = button.classList.contains('liked')
+    const isLiked = button.classList.contains('liked');
     
     try {
         if (isLiked) {
@@ -364,10 +365,11 @@ async function toggleWishlist(button, productId) {
                 .from('wishlist_items')
                 .delete()
                 .eq('user_id', user.id)
-                .eq('product_id', productId)
+                .eq('product_id', productId);
             
-            button.classList.remove('liked')
-            button.querySelector('.heart').textContent = '🤍'
+            button.classList.remove('liked');
+            button.querySelector('.heart').textContent = '🤍';
+            showNotification('Removed from wishlist');
         } else {
             // Add to wishlist
             await supabase
@@ -375,13 +377,19 @@ async function toggleWishlist(button, productId) {
                 .insert({
                     user_id: user.id,
                     product_id: productId
-                })
+                });
             
-            button.classList.add('liked')
-            button.querySelector('.heart').textContent = '❤️'
+            button.classList.add('liked');
+            button.querySelector('.heart').textContent = '❤️';
+            showNotification('Added to wishlist!', 'success');
         }
+        
+        // Update badge
+        await updateWishlistBadge();
+        
     } catch (error) {
-        console.error('Wishlist error:', error)
+        console.error('Wishlist error:', error);
+        showNotification('Error updating wishlist', 'error');
     }
 }
 
@@ -539,4 +547,48 @@ function showNotification(message, type = 'success') {
         notification.style.animation = 'slideOut 0.3s ease'
         setTimeout(() => notification.remove(), 300)
     }, 3000)
+}
+// Toggle User Menu Dropdown
+function toggleUserMenu(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById('userMenu');
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('userMenu');
+    const dropdown = event.target.closest('.dropdown');
+    
+    if (!dropdown && menu) {
+        menu.style.display = 'none';
+    }
+});
+
+// Update Wishlist Badge
+async function updateWishlistBadge() {
+    const user = await getCurrentUser();
+    if (!user) {
+        document.getElementById('wishlistBadge').textContent = '0';
+        return;
+    }
+    
+    try {
+        const { data, error } = await supabase
+            .from('wishlist_items')
+            .select('id')
+            .eq('user_id', user.id);
+        
+        if (error) throw error;
+        
+        document.getElementById('wishlistBadge').textContent = data.length;
+    } catch (error) {
+        console.error('Error updating wishlist badge:', error);
+    }
+}
+
+// Logout function
+async function logout() {
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
 }
