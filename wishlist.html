@@ -29,19 +29,32 @@
                 <a href="marketplace.html">Marketplace</a>
                 <a href="wishlist.html" class="active">Wishlist</a>
                 <a href="dashboard.html">Dashboard</a>
+                <a href="index.html#about">About</a>
             </nav>
             
             <div class="header-actions">
                 <button class="icon-button" onclick="window.location.href='marketplace.html'">
                     🔍
                 </button>
+                <button class="icon-button wishlist-button" onclick="window.location.href='wishlist.html'">
+                    ❤️
+                    <span class="cart-badge" id="wishlistBadge">0</span>
+                </button>
                 <button class="icon-button cart-button" onclick="window.location.href='marketplace.html#cart'">
                     🛒
                     <span class="cart-badge" id="cartBadge">0</span>
                 </button>
-                <button class="icon-button" onclick="toggleUserMenu()">
-                    👤
-                </button>
+                <div class="dropdown" style="position: relative;">
+                    <button class="icon-button" onclick="toggleUserMenu(event)">
+                        👤
+                    </button>
+                    <div class="dropdown-menu" id="userMenu" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 10px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); min-width: 200px; z-index: 1000;">
+                        <a href="dashboard.html" style="display: block; padding: 12px 20px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">📊 Dashboard</a>
+                        <a href="wishlist.html" style="display: block; padding: 12px 20px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">❤️ Wishlist</a>
+                        <a href="orders.html" style="display: block; padding: 12px 20px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">📦 Orders</a>
+                        <a href="#" onclick="logout()" style="display: block; padding: 12px 20px; color: #333; text-decoration: none;">🚪 Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
