@@ -17,7 +17,7 @@
     <!-- REPLACE your entire <header> section in marketplace.html with this -->
     <header>
         <div class="header-content">
-            <div class="logo-container">
+            <div class="logo-container" onclick="window.location.href='index.html'" style="cursor: pointer;">
                 <div class="logo-mark">
                     <div class="logo-shape shape-health"></div>
                     <div class="logo-shape shape-wealth"></div>
@@ -30,7 +30,7 @@
             <nav class="main-nav">
                 <a href="index.html">Home</a>
                 <a href="marketplace.html" class="active">Marketplace</a>
-                <a href="index.html#about">About</a>
+                <a href="about.html">About</a>
                 <a href="index.html#contact">Contact</a>
             </nav>
             
@@ -39,39 +39,82 @@
                     🔍
                 </button>
                 
-                <!-- NEW: Wishlist Button -->
+                <!-- Wishlist Button -->
                 <button class="icon-button wishlist-button" onclick="window.location.href='wishlist.html'">
                     ❤️
                     <span class="cart-badge" id="wishlistBadge">0</span>
                 </button>
                 
+                <!-- Cart Button -->
                 <button class="icon-button cart-button" onclick="toggleCart()">
                     🛒
                     <span class="cart-badge" id="cartBadge">0</span>
                 </button>
                 
-                <!-- UPDATED: Profile with Dropdown -->
+                <!-- Profile Dropdown -->
                 <div class="profile-dropdown">
-                    <button class="icon-button" onclick="toggleProfileMenu()">
-                        👤
+                    <button class="icon-button profile-btn" onclick="toggleProfileMenu(event)" id="profileButton">
+                        <span id="profileIcon">👤</span>
                     </button>
-                    <div class="dropdown-menu" id="profileMenu">
-                        <a href="dashboard.html" class="dropdown-item">
-                            <span>📊</span> Dashboard
-                        </a>
-                        <a href="wishlist.html" class="dropdown-item">
-                            <span>❤️</span> My Wishlist
-                        </a>
-                        <a href="orders.html" class="dropdown-item">
-                            <span>📦</span> Orders
-                        </a>
-                        <a href="account.html" class="dropdown-item">
-                            <span>⚙️</span> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item" onclick="logout()">
-                            <span>🚪</span> Logout
-                        </a>
+                    <div class="profile-menu" id="profileMenu">
+                        <!-- Guest Menu (shown when not logged in) -->
+                        <div id="guestMenu" style="display: none;">
+                            <div class="profile-menu-header">
+                                <div class="profile-info">
+                                    <div class="profile-name">Welcome, Guest!</div>
+                                    <div class="profile-email">Sign in for full experience</div>
+                                </div>
+                            </div>
+                            <div class="profile-menu-divider"></div>
+                            <a href="auth.html" class="profile-menu-item">
+                                <span class="menu-icon">🔐</span>
+                                <span>Sign In / Register</span>
+                            </a>
+                            <div class="profile-menu-divider"></div>
+                            <a href="marketplace.html" class="profile-menu-item">
+                                <span class="menu-icon">🛍️</span>
+                                <span>Browse Products</span>
+                            </a>
+                            <a href="#" class="profile-menu-item" onclick="guestCheckoutWarning()">
+                                <span class="menu-icon">🛒</span>
+                                <span>View Cart</span>
+                            </a>
+                        </div>
+                        
+                        <!-- Logged In Menu -->
+                        <div id="loggedInMenu" style="display: none;">
+                            <div class="profile-menu-header">
+                                <div class="profile-avatar" id="profileAvatar">
+                                    <span id="avatarInitial">U</span>
+                                </div>
+                                <div class="profile-info">
+                                    <div class="profile-name" id="profileName">User Name</div>
+                                    <div class="profile-email" id="profileEmail">user@email.com</div>
+                                </div>
+                            </div>
+                            <div class="profile-menu-divider"></div>
+                            <a href="dashboard.html" class="profile-menu-item">
+                                <span class="menu-icon">📊</span>
+                                <span>Dashboard</span>
+                            </a>
+                            <a href="wishlist.html" class="profile-menu-item">
+                                <span class="menu-icon">❤️</span>
+                                <span>My Wishlist</span>
+                            </a>
+                            <a href="orders.html" class="profile-menu-item">
+                                <span class="menu-icon">📦</span>
+                                <span>My Orders</span>
+                            </a>
+                            <a href="account.html" class="profile-menu-item">
+                                <span class="menu-icon">⚙️</span>
+                                <span>Account Settings</span>
+                            </a>
+                            <div class="profile-menu-divider"></div>
+                            <a href="#" class="profile-menu-item" onclick="logout()">
+                                <span class="menu-icon">🚪</span>
+                                <span>Logout</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,9 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // Initialize Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
+// PayPal Configuration (if using PayPal)
+const paypalClientId = 'YOUR_PAYPAL_CLIENT_ID'; // Optional
+
 // Helper function to check if user is logged in
 async function getCurrentUser() {
     const { data: { user } } = await supabase.auth.getUser()

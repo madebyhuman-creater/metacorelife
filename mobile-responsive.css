@@ -1,0 +1,555 @@
+/* mobile-responsive.css - Add this file or append to your styles.css */
+/* Ensures perfect mobile experience for MetaCore Life */
+
+/* ==================== MOBILE-FIRST OPTIMIZATIONS ==================== */
+
+/* Touch-friendly tap targets (44x44px minimum for iOS) */
+button,
+a,
+input[type="submit"],
+.icon-button,
+.cart-button,
+.profile-btn {
+    min-width: 44px;
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+}
+
+/* Prevent text selection on buttons */
+button,
+.btn,
+.icon-button {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==================== RESPONSIVE BREAKPOINTS ==================== */
+
+/* Mobile First: Base styles for phones */
+@media (max-width: 600px) {
+    /* Header adjustments */
+    header {
+        padding: 12px 16px;
+    }
+    
+    .header-content {
+        gap: 12px;
+    }
+    
+    .logo-text {
+        font-size: 20px;
+    }
+    
+    .main-nav {
+        display: none; /* Hide main nav on mobile, use hamburger */
+    }
+    
+    .header-actions {
+        gap: 8px;
+    }
+    
+    .icon-button {
+        padding: 8px;
+    }
+    
+    .icon-button-text {
+        display: none; /* Hide text labels on mobile */
+    }
+    
+    /* Profile dropdown mobile */
+    .profile-menu {
+        right: -10px;
+        min-width: 280px;
+        max-width: calc(100vw - 20px);
+    }
+    
+    /* Marketplace grid */
+    .products-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+    
+    .product-card {
+        margin: 0;
+    }
+    
+    /* Forms */
+    input,
+    textarea,
+    select,
+    .form-group input {
+        font-size: 16px !important; /* Prevents iOS zoom */
+    }
+    
+    /* Auth page */
+    .auth-container {
+        margin: 16px;
+    }
+    
+    .auth-header {
+        padding: 24px 20px 20px;
+    }
+    
+    .auth-body {
+        padding: 0 20px 24px;
+    }
+    
+    /* Cart sidebar */
+    .cart-sidebar {
+        width: 100% !important;
+        max-width: 100%;
+    }
+    
+    /* Filters */
+    .filters-section {
+        padding: 16px;
+    }
+    
+    .category-filters {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        gap: 8px;
+        padding-bottom: 8px;
+    }
+    
+    .category-btn {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    /* Search overlay */
+    .search-overlay {
+        padding: 16px;
+    }
+    
+    .search-input {
+        font-size: 16px !important;
+    }
+    
+    /* Dashboard */
+    .dashboard-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    /* Wishlist */
+    .wishlist-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Product modal */
+    .product-modal {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+    
+    .modal-body {
+        grid-template-columns: 1fr !important;
+        padding: 16px;
+    }
+    
+    /* Buttons */
+    .btn-primary,
+    .btn-secondary,
+    .btn-auth {
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+    
+    /* Spacing */
+    .container {
+        padding: 0 16px;
+    }
+    
+    section {
+        padding: 40px 16px;
+    }
+    
+    /* Footer */
+    footer {
+        padding: 32px 16px;
+    }
+}
+
+/* Tablet: 601px - 968px */
+@media (min-width: 601px) and (max-width: 968px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .wishlist-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .dashboard-content {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Desktop: 969px+ */
+@media (min-width: 969px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+/* ==================== MOBILE NAVIGATION (Hamburger) ==================== */
+
+/* Add this to your header for mobile */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+@media (max-width: 600px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .main-nav {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        flex-direction: column;
+        padding: 20px;
+        gap: 12px;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+    }
+    
+    .main-nav.active {
+        transform: translateY(0);
+    }
+    
+    .main-nav a {
+        padding: 12px;
+        border-radius: 8px;
+        display: block;
+    }
+}
+
+/* ==================== TOUCH IMPROVEMENTS ==================== */
+
+/* Larger touch targets for product cards */
+@media (max-width: 600px) {
+    .product-card {
+        cursor: pointer;
+    }
+    
+    .add-to-cart-btn {
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+    
+    .action-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+    }
+}
+
+/* ==================== PERFORMANCE OPTIMIZATIONS ==================== */
+
+/* Use GPU acceleration for animations */
+.product-card,
+.profile-menu,
+.cart-sidebar,
+.modal,
+button {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Lazy load images */
+img {
+    loading: lazy;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ==================== iOS SPECIFIC FIXES ==================== */
+
+/* Fix iOS input zoom */
+@media screen and (max-width: 600px) {
+    select,
+    textarea,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"] {
+        font-size: 16px !important;
+    }
+}
+
+/* Fix iOS bottom safe area */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    body {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    footer {
+        padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+    
+    .cart-sidebar {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ==================== ANDROID SPECIFIC FIXES ==================== */
+
+/* Fix Android Chrome address bar issues */
+.vh-mobile {
+    height: 100vh;
+    height: -webkit-fill-available;
+}
+
+/* ==================== LANDSCAPE ORIENTATION ==================== */
+
+@media (max-width: 968px) and (orientation: landscape) {
+    .auth-container {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .product-modal {
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+    
+    .modal-body {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* ==================== LOADING STATES ==================== */
+
+/* Skeleton loading for better perceived performance */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ==================== PULL TO REFRESH PREVENTION ==================== */
+
+/* Prevent accidental pull-to-refresh on mobile */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* ==================== FOCUS STATES FOR ACCESSIBILITY ==================== */
+
+/* Visible focus for keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* But hide for mouse users */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ==================== MOBILE CART OPTIMIZATION ==================== */
+
+@media (max-width: 600px) {
+    .cart-items {
+        max-height: calc(100vh - 250px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .cart-item {
+        grid-template-columns: 80px 1fr auto;
+        gap: 12px;
+        padding: 12px;
+    }
+    
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* ==================== MOBILE PRODUCT DETAILS ==================== */
+
+@media (max-width: 600px) {
+    .product-details {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+        border-radius: 20px 20px 0 0;
+        z-index: 1000;
+    }
+    
+    .product-actions {
+        display: flex;
+        gap: 12px;
+    }
+    
+    .product-actions button {
+        flex: 1;
+    }
+}
+
+/* ==================== STICKY ADD TO CART ON MOBILE ==================== */
+
+@media (max-width: 600px) {
+    .sticky-cart-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 16px 20px;
+        box-shadow: 0 -2px 12px rgba(0,0,0,0.1);
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        z-index: 999;
+        transform: translateZ(0);
+    }
+    
+    .sticky-cart-bar .btn-primary {
+        flex: 1;
+        margin: 0;
+    }
+}
+
+/* ==================== HAPTIC FEEDBACK (Subtle animations) ==================== */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Mobile devices only */
+    button:active,
+    .btn:active,
+    .icon-button:active {
+        transform: scale(0.95);
+        transition: transform 0.1s;
+    }
+}
+
+/* ==================== MOBILE TYPOGRAPHY ==================== */
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+    
+    h2 {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+    
+    h3 {
+        font-size: 20px;
+        line-height: 1.4;
+    }
+    
+    p,
+    body {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    
+    .product-name {
+        font-size: 16px;
+    }
+    
+    .product-price {
+        font-size: 22px;
+    }
+}
+
+/* ==================== MOBILE-OPTIMIZED IMAGES ==================== */
+
+@media (max-width: 600px) {
+    .product-image,
+    .item-image {
+        aspect-ratio: 1;
+        object-fit: cover;
+        width: 100%;
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* ==================== DONE! ==================== */
+
+/* 
+This CSS file ensures:
+✅ Perfect touch targets (44x44px)
+✅ No iOS zoom on inputs
+✅ Smooth scrolling
+✅ Pull-to-refresh prevention
+✅ Safe area handling (iPhone notch)
+✅ Landscape support
+✅ Accessible focus states
+✅ Performance optimizations
+✅ Beautiful on ALL mobile devices
+*/

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | MetaCore Life</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="marketplace.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .about-hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .about-hero p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .mission-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .mission-box h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mission-box p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .value-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+
+        .value-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .value-card p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .quality-promise {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f1ff 100%);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .quality-promise h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .quality-items {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .quality-item {
+            text-align: center;
+        }
+
+        .quality-item .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .quality-item h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .cta-box {
+            text-align: center;
+            padding: 50px 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
+        }
+
+        .cta-box h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .btn-large {
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 36px;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quality-items {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .mission-box,
+            .quality-promise,
+            .cta-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-container" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                <div class="logo-mark">
+                    <div class="logo-shape shape-health"></div>
+                    <div class="logo-shape shape-wealth"></div>
+                    <div class="logo-shape shape-relationships"></div>
+                    <div class="logo-core"></div>
+                </div>
+                <div class="logo-text">MetaCore<span>Life</span></div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="about.html" class="active">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="icon-button" onclick="window.location.href='marketplace.html'">
+                    🔍
+                </button>
+                <button class="icon-button" onclick="window.location.href='wishlist.html'">
+                    ❤️
+                </button>
+                <button class="icon-button" onclick="window.location.href='marketplace.html'">
+                    🛒
+                </button>
+                <button class="icon-button" onclick="window.location.href='auth.html'">
+                    👤
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <h1>About MetaCore</h1>
+        <p>Premium products. Tested quality. Your trusted marketplace.</p>
+    </section>
+
+    <!-- Content -->
+    <div class="about-content">
+        <!-- Mission -->
+        <div class="mission-box">
+            <h2>Our Mission</h2>
+            <p>We curate and personally test every product to ensure it meets our high standards. No fluff, just quality products that support your journey in health, wealth, and relationships.</p>
+        </div>
+
+        <!-- Core Values -->
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">✨</div>
+                <h3>Personally Tested</h3>
+                <p>Every product is tested by our team before it reaches you.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🔒</div>
+                <h3>Secure & Safe</h3>
+                <p>Your data and payments are protected with industry-standard security.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🚚</div>
+                <h3>Fast Shipping</h3>
+                <p>Orders ship within 24-48 hours and arrive in 3-5 business days.</p>
+            </div>
+        </div>
+
+        <!-- Quality Promise -->
+        <div class="quality-promise">
+            <h2>Our Quality Promise</h2>
+            <p style="max-width: 600px; margin: 0 auto; font-size: 16px; color: #666;">Every item goes through rigorous testing. We only sell what we'd use ourselves.</p>
+            
+            <div class="quality-items">
+                <div class="quality-item">
+                    <div class="icon">🔍</div>
+                    <h4>Vetted Suppliers</h4>
+                </div>
+                <div class="quality-item">
+                    <div class="icon">✅</div>
+                    <h4>Quality Checked</h4>
+                </div>
+                <div class="quality-item">
+                    <div class="icon">💯</div>
+                    <h4>Satisfaction Guaranteed</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h2>Ready to Shop?</h2>
+            <p>Explore our curated collection of premium products</p>
+            <a href="marketplace.html" class="btn-large">Browse Marketplace</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">Building a future where health, wealth, and relationships thrive in harmony.</p>
+            <p class="footer-copyright">© 2025 MetaCore Life. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
